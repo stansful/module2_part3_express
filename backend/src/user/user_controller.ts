@@ -3,6 +3,6 @@ import { userService } from './user_service';
 
 const userRouter = Router();
 
-userRouter.post('/login', userService.signIn);
+userRouter.post('/login', userService);
 
 export { userRouter };

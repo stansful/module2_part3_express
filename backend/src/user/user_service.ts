@@ -1,24 +1,37 @@
 import { Request, Response } from 'express';
 import { User } from './user_interface';
 import { localDatabase } from '../database/local_database';
-import { responseService } from '../response/response_service';
+import { ExceptionService } from '../exception/exceptions_service';
+import { tokenService } from '../token/token_service';
 
 class UserService {
+  private verifyPasswords(candidatePassword: string, userPassword: string) {
+    const valid = candidatePassword === userPassword;
+    if (!valid) {
+      throw ExceptionService.Unauthorized('Email or password are invalid.');
+    }
+  }
+
   public signIn(req: Request, res: Response) {
     const candidate: User = { email: req.body.email, password: req.body.password };
-
     try {
       const user = localDatabase.getOne(candidate);
-      const passwordMatch = user.password === candidate.password;
+      this.verifyPasswords(candidate.password, user.password);
 
-      if (passwordMatch) {
-        return responseService.successSignIn(res);
-      }
-      responseService.badCredentials(res);
+      const token = { token: tokenService.token };
+      res.json(token);
     } catch (error) {
-      responseService.badCredentials(res);
+      if (error instanceof ExceptionService) {
+        return res.json({ errorMessage: error.message });
+      }
+      return res.json({ errorMessage: 'Email or password are invalid.' });
     }
   }
 }
 
-export const userService = new UserService();
+const saveContext = (req: Request, res: Response) => {
+  const userService = new UserService();
+  return userService.signIn(req, res);
+};
+
+export const userService = saveContext;
