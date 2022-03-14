@@ -15,7 +15,7 @@ class GalleryService {
   }
 
   private static checkToken(token: string) {
-    const isValid = tokenService.validateToken(token);
+    const isValid = tokenService.verifyToken(token);
     if (!isValid) {
       throw new Error('Token is not valid');
     }

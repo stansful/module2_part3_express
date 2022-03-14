@@ -7,7 +7,7 @@ class TokenService {
     this.secretToken = config.SECRET_AUTHORIZATION_TOKEN;
   }
 
-  public validateToken(token: string) {
+  public verifyToken(token: string) {
     return this.secretToken === token;
   }
 
