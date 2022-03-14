@@ -8,7 +8,7 @@ class UserService {
   private verifyPasswords(candidatePassword: string, userPassword: string) {
     const valid = candidatePassword === userPassword;
     if (!valid) {
-      throw ExceptionService.Unauthorized('Email or password are invalid.');
+      throw ExceptionService.Unauthorized('Password verify failed');
     }
   }
 
@@ -21,10 +21,7 @@ class UserService {
       const token = { token: tokenService.token };
       res.json(token);
     } catch (error) {
-      if (error instanceof ExceptionService) {
-        return res.json({ errorMessage: error.message });
-      }
-      return res.json({ errorMessage: 'Email or password are invalid.' });
+      throw ExceptionService.Unauthorized('Email or password are invalid.');
     }
   }
 }
