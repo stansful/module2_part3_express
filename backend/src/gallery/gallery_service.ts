@@ -1,5 +1,5 @@
-import { IncomingMessage, ServerResponse } from 'http';
 import fs from 'fs/promises';
+import { Request, Response } from 'express';
 import { Gallery, Position } from './gallery_interface';
 import { config } from '../configs/config';
 import { responseService } from '../response/response_service';
@@ -55,9 +55,9 @@ class GalleryService {
     return { objects: picturesPath, page: requestPage, total: totalPages };
   }
 
-  public async sendRequiredPictures(req: IncomingMessage, res: ServerResponse, url: URL) {
+  public async sendRequiredPictures(req: Request, res: Response) {
     const token = req.headers.authorization || '';
-    const requestPage = Number(url.searchParams.get('page')) || 1;
+    const requestPage = Number(req.query.page) || 1;
     const position = this.calculateCopyPositions(requestPage);
     const totalPages = await this.getTotalPages();
     try {
@@ -72,9 +72,9 @@ class GalleryService {
   }
 }
 
-const saveContext = (req: IncomingMessage, res: ServerResponse, url: URL) => {
+const saveContext = (req: Request, res: Response) => {
   const galleryService = new GalleryService();
-  return galleryService.sendRequiredPictures(req, res, url);
+  return galleryService.sendRequiredPictures(req, res);
 };
 
 export const galleryService = saveContext;
