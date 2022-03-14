@@ -1,7 +1,7 @@
 import { config } from '../configs/config';
 
 export class ExceptionService<Type> extends Error {
-  status: Number;
+  status: number;
   message: string;
   data?: Type;
 
