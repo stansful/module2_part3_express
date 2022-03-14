@@ -1,0 +1,12 @@
+.idea
+.git
+backend/.idea
+backend/.git
+backend/dist
+backend/node_modules
+backend/.env
+backend/static/frontend
+frontend/.idea
+frontend/.git
+frontend/js
+frontend/node_modules
