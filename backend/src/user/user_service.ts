@@ -6,8 +6,8 @@ import { tokenService } from '../token/token_service';
 
 class UserService {
   private verifyPasswords(candidatePassword: string, userPassword: string) {
-    const valid = candidatePassword === userPassword;
-    if (!valid) {
+    const isValid = candidatePassword === userPassword;
+    if (!isValid) {
       throw ExceptionService.Unauthorized('Password verify failed');
     }
   }
