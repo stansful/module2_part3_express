@@ -6,8 +6,7 @@
 
 ```
 npm run start
-    # or
-yarn start
+npm run dev
 ```
 
 * After installing dependencies and etc.

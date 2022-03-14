@@ -35,16 +35,12 @@
 
 ```
 npm install 
-    # or
-yarn install
 ```
 
 2. Compile project
 
 ```
 npm run build
-    # or
-yarn build
 ```
 
 3. Open index.html using IDE to avoid CORS errors
@@ -59,16 +55,12 @@ yarn build
 
 ```
 npm run format
-    # or
-yarn format
 ```
 
 * lint and fix with eslint
 
 ```
 npm run lint
-    # or
-yarn lint
 ```
 
 ## Issues

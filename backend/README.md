@@ -57,24 +57,18 @@
 
 ```
 npm install 
-    # or
-yarn install
 ```
 
 2. Copy static
 
 ```
 npm run copy:static
-    # or
-yarn copy:static
 ```
 
 3. Start dev mode
 
 ```
 npm run dev
-    # or
-yarn dev
 ```
 
 ## Other commands:
@@ -83,16 +77,12 @@ yarn dev
 
 ```
 npm run format
-    # or
-yarn format
 ```
 
 * lint and fix with eslint
 
 ```
 npm run lint
-    # or
-yarn lint
 ```
 
 * full list of commands available in package.json
