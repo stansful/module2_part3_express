@@ -1,30 +1,22 @@
 import fs from 'fs/promises';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Gallery, Position } from './gallery_interface';
 import { config } from '../configs/config';
-import { responseService } from '../response/response_service';
-import { tokenService } from '../token/token_service';
+import { ExceptionService } from '../exception/exceptions_service';
 
 class GalleryService {
-  limit: number;
-  picturesPath: string;
+  private readonly limit: number;
+  private readonly picturesPath: string;
 
   constructor() {
     this.limit = config.DEFAULT_PICTURE_LIMIT;
     this.picturesPath = config.static.path.pictures;
   }
 
-  private static checkToken(token: string) {
-    const isValid = tokenService.verifyToken(token);
-    if (!isValid) {
-      throw new Error('Token is not valid');
-    }
-  }
-
-  private static checkPageBorders(page: number, total: number) {
+  private checkPageBorders(page: number, total: number) {
     const isValid = page > 0 && page <= total;
     if (!isValid) {
-      throw new Error('Page is not valid');
+      throw ExceptionService.BadRequest(`Page should be greater than 0 and less than ${total}`);
     }
   }
 
@@ -55,26 +47,24 @@ class GalleryService {
     return { objects: picturesPath, page: requestPage, total: totalPages };
   }
 
-  public async sendRequiredPictures(req: Request, res: Response) {
-    const token = req.headers.authorization || '';
+  public async sendRequiredPictures(req: Request, res: Response, next: NextFunction) {
     const requestPage = Number(req.query.page) || 1;
     const position = this.calculateCopyPositions(requestPage);
     const totalPages = await this.getTotalPages();
     try {
-      GalleryService.checkToken(token);
-      GalleryService.checkPageBorders(requestPage, totalPages);
+      this.checkPageBorders(requestPage, totalPages);
       const requiredPictures = await this.getRequiredPictures(position.start, position.end);
       const sendingObject = this.createSendingObject(requiredPictures, requestPage, totalPages);
-      responseService.galleryObjects<Gallery>(res, sendingObject);
+      res.json(sendingObject);
     } catch (error) {
-      responseService.badRequest(res, totalPages);
+      next(error);
     }
   }
 }
 
-const saveContext = (req: Request, res: Response) => {
+const saveContext = (req: Request, res: Response, next: NextFunction) => {
   const galleryService = new GalleryService();
-  return galleryService.sendRequiredPictures(req, res);
+  return galleryService.sendRequiredPictures(req, res, next);
 };
 
 export const galleryService = saveContext;
