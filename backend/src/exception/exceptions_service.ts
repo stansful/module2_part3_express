@@ -1,9 +1,9 @@
 import { config } from '../configs/config';
 
 export class ExceptionService<Type> extends Error {
-  status: number;
-  message: string;
-  data?: Type;
+  public readonly status: number;
+  public readonly message: string;
+  public readonly data?: Type;
 
   constructor(status: number, message: string, data?: Type) {
     super(message);
