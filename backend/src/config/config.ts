@@ -28,6 +28,7 @@ export const config: Config = {
       css: path.resolve(__dirname, '..', '..', 'static', 'frontend', 'css'),
       js: path.resolve(__dirname, '..', '..', 'static', 'frontend', 'js'),
       frontend: path.resolve(__dirname, '..', '..', 'static', 'frontend'),
+      logs: path.resolve(__dirname, '..', '..', 'logs'),
     },
   },
   DEFAULT_PICTURE_LIMIT: 6,
