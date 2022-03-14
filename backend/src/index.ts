@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import { config } from './configs/config';
+import { config } from './config/config';
 import { userRouter } from './user/user_controller';
 import { galleryRouter } from './gallery/gallery_controller';
 import { errorService } from './error/error_service';

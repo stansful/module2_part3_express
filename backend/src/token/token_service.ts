@@ -1,4 +1,4 @@
-import { config } from '../configs/config';
+import { config } from '../config/config';
 
 class TokenService {
   private readonly secretToken: string;

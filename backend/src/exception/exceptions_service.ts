@@ -1,4 +1,4 @@
-import { config } from '../configs/config';
+import { config } from '../config/config';
 
 export class ExceptionService<Type> extends Error {
   public readonly status: number;

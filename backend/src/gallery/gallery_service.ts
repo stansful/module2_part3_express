@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import { NextFunction, Request, Response } from 'express';
 import { Gallery, Position } from './gallery_interface';
-import { config } from '../configs/config';
+import { config } from '../config/config';
 import { ExceptionService } from '../exception/exceptions_service';
 
 class GalleryService {

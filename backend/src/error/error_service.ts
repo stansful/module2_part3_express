@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ExceptionService } from '../exception/exceptions_service';
-import { config } from '../configs/config';
+import { config } from '../config/config';
 
 class ErrorService {
   public handleError(error: Error, req: Request, res: Response, next: NextFunction) {
