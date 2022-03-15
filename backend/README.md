@@ -8,25 +8,26 @@
 ```
 .
 ├── src
+│    │── auth
+│    │     └── auth_service.ts
 │    │── configs
 │    │     │── config.ts
 │    │     └── config_interface.ts
 │    ├── database
 │    │     │── local_database.ts
 │    │     └── database_interface.ts
-│    ├── framework
-│    │     │── application.ts                      -| main file of custom framework 
-│    │     │── framework_interfaces.ts
-│    │     │── router.ts
-│    │     │── static_controller.ts
-│    │     └── static_service.ts
+│    │── error
+│    │     └── error_service.ts
+│    │── exception
+│    │     └── exception_service.ts
+│    │── fs
+│    │     └── fs_service.ts
 │    ├── gallery
 │    │     │── gallery_controller.ts
 │    │     │── gallery_interface.ts
 │    │     └── gallery_service.ts
-│    ├── response
-│    │     │── response_interface.ts
-│    │     └── response_service.ts
+│    ├── logger
+│    │     └── logger_service.ts
 │    ├── token
 │    │     └── token_service.ts
 │    └── user
@@ -39,7 +40,10 @@
 │    │     │── 1.jpeg
 │    │     │── 2.jpeg
 │    │     └── N.jpeg
-│    └── frontend           
+│    └── frontend
+│
+├── logs
+├── uploads
 │
 ├── .eslintignore         -| ignore files for eslint
 ├── .eslintrc.json        -| lint configs
