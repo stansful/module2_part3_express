@@ -65,7 +65,7 @@ class LoggerService {
   public async errorLogger(error: Error, req: Request, res: Response, next: NextFunction) {
     const data = this.createLog(req);
     const occurredError = JSON.stringify(error);
-    await fsService.appendFile(path.join(this.logsPath, this.logFileName), `${data} Error: ${occurredError}`);
+    await fsService.appendFile(path.join(this.logsPath, this.logFileName), `${data} Error: ${occurredError} \n\n`);
     next();
   }
 }
