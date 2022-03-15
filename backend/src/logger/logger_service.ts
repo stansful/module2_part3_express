@@ -5,9 +5,14 @@ import path from 'path';
 
 class LoggerService {
   private readonly logsPath: string;
+  private logsHour: number;
+  private logFileName: string;
 
   constructor() {
     this.logsPath = config.static.path.logs;
+    const date = new Date();
+    this.logsHour = date.getHours();
+    this.logFileName = date.toString() + '.txt';
   }
 
   private async createLogFolderIfNotExist() {
@@ -31,10 +36,29 @@ class LoggerService {
     return title + method + url + body + requestTime + newLine;
   }
 
+  private checkHoursIfChangeCreateNewLogFileName() {
+    const date = new Date();
+    const currentHour = date.getHours();
+    const isSame = this.logsHour === currentHour;
+    if (!isSame) {
+      this.updateLogHours(currentHour);
+      this.updateLogFileName(date.toString());
+    }
+  }
+
+  private updateLogFileName(date: string) {
+    this.logFileName = date + '.txt';
+  }
+
+  private updateLogHours(newHours: number) {
+    this.logsHour = newHours;
+  }
+
   public async logRequestInfo(req: Request, res: Response, next: NextFunction) {
     const data = this.createLog(req);
     await this.createLogFolderIfNotExist();
-    await fsService.appendFile(path.join(this.logsPath, 'Test-log.txt'), data);
+    this.checkHoursIfChangeCreateNewLogFileName();
+    await fsService.appendFile(path.join(this.logsPath, this.logFileName), data);
     next();
   }
 }
