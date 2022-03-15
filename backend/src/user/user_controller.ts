@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { userService } from './user_service';
+import { signIn } from './user_service';
 
 const userRouter = Router();
 
-userRouter.post('/login', userService);
+userRouter.post('/login', signIn);
 
 export { userRouter };

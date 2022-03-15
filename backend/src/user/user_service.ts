@@ -26,9 +26,7 @@ class UserService {
   }
 }
 
-const saveContext = (req: Request, res: Response) => {
+export const signIn = (req: Request, res: Response) => {
   const userService = new UserService();
   return userService.signIn(req, res);
 };
-
-export const userService = saveContext;
