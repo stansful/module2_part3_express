@@ -5,7 +5,7 @@ class FsService {
   public async appendFile(
     filePath: PathLike | fsPromises.FileHandle,
     data: string | Uint8Array,
-    options?: (ObjectEncodingOptions & fsPromises.FlagAndOpenMode) | BufferEncoding | null | undefined,
+    options?: ObjectEncodingOptions & fsPromises.FlagAndOpenMode,
   ): Promise<void> {
     await fsPromises.appendFile(filePath, data, options);
   }
@@ -23,6 +23,10 @@ class FsService {
 
   public async makeDirectory(path: PathLike, options?: fs.MakeDirectoryOptions) {
     return fsPromises.mkdir(path, options);
+  }
+
+  public async readdir(path: PathLike, options?: fs.ObjectEncodingOptions) {
+    return fsPromises.readdir(path, options);
   }
 }
 

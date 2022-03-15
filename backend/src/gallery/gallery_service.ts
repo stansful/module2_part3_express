@@ -1,8 +1,8 @@
-import fs from 'fs/promises';
 import { NextFunction, Request, Response } from 'express';
 import { Gallery, Position } from './gallery_interface';
 import { config } from '../config/config';
 import { ExceptionService } from '../exception/exceptions_service';
+import { fsService } from '../fs/fs_service';
 
 class GalleryService {
   private readonly limit: number;
@@ -33,7 +33,7 @@ class GalleryService {
   }
 
   private async getAllPictures() {
-    return fs.readdir(this.picturesPath);
+    return fsService.readdir(this.picturesPath);
   }
 
   private async prepareRequiredPictures(startPosition: number, endPosition: number) {
@@ -61,8 +61,8 @@ class GalleryService {
     }
   }
 
-  public async createPictures(req: Request, res: Response, next: NextFunction) {
-    req.body;
+  public async createPicture(req: Request, res: Response, next: NextFunction) {
+    console.log(req.file);
     res.end();
   }
 }
@@ -72,6 +72,6 @@ const galleryService = new GalleryService();
 export const getRequiredPictures = (req: Request, res: Response, next: NextFunction) => {
   return galleryService.getRequiredPictures(req, res, next);
 };
-export const createPictures = (req: Request, res: Response, next: NextFunction) => {
-  return galleryService.createPictures(req, res, next);
+export const createPicture = (req: Request, res: Response, next: NextFunction) => {
+  return galleryService.createPicture(req, res, next);
 };
