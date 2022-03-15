@@ -36,7 +36,7 @@ class GalleryService {
     return fs.readdir(this.picturesPath);
   }
 
-  private async getRequiredPictures(startPosition: number, endPosition: number) {
+  private async prepareRequiredPictures(startPosition: number, endPosition: number) {
     const pictures = await this.getAllPictures();
     return pictures.slice(startPosition, endPosition).map((pictureName) => {
       return `${config.env.PROTOCOL}://${config.env.DOMAIN}:${config.env.PORT}/${pictureName}`;
@@ -47,24 +47,31 @@ class GalleryService {
     return { objects: picturesPath, page: requestPage, total: totalPages };
   }
 
-  public async sendRequiredPictures(req: Request, res: Response, next: NextFunction) {
+  public async getRequiredPictures(req: Request, res: Response, next: NextFunction) {
     const requestPage = Number(req.query.page) || 1;
     const position = this.calculateCopyPositions(requestPage);
     const totalPages = await this.getTotalPages();
     try {
       this.checkPageBorders(requestPage, totalPages);
-      const requiredPictures = await this.getRequiredPictures(position.start, position.end);
+      const requiredPictures = await this.prepareRequiredPictures(position.start, position.end);
       const sendingObject = this.createSendingObject(requiredPictures, requestPage, totalPages);
       res.json(sendingObject);
     } catch (error) {
       next(error);
     }
   }
+
+  public async createPictures(req: Request, res: Response, next: NextFunction) {
+    req.body;
+    res.end();
+  }
 }
 
-const saveContext = (req: Request, res: Response, next: NextFunction) => {
-  const galleryService = new GalleryService();
-  return galleryService.sendRequiredPictures(req, res, next);
-};
+const galleryService = new GalleryService();
 
-export const galleryService = saveContext;
+export const getRequiredPictures = (req: Request, res: Response, next: NextFunction) => {
+  return galleryService.getRequiredPictures(req, res, next);
+};
+export const createPictures = (req: Request, res: Response, next: NextFunction) => {
+  return galleryService.createPictures(req, res, next);
+};
