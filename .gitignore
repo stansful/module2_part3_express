@@ -7,6 +7,7 @@ backend/node_modules
 backend/.env
 backend/static/frontend
 backend/logs
+backend/uploads
 frontend/.idea
 frontend/.git
 frontend/js
