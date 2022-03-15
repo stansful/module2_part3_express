@@ -61,9 +61,21 @@ class LoggerService {
     await fsService.appendFile(path.join(this.logsPath, this.logFileName), data);
     next();
   }
+
+  public async errorLogger(error: Error, req: Request, res: Response, next: NextFunction) {
+    const data = this.createLog(req);
+    const occurredError = JSON.stringify(error);
+    await fsService.appendFile(path.join(this.logsPath, this.logFileName), `${data} Error: ${occurredError}`);
+    next();
+  }
 }
 
+const loggerService = new LoggerService();
+
 export const logRequestInfo = (req: Request, res: Response, next: NextFunction) => {
-  const loggerService = new LoggerService();
   return loggerService.logRequestInfo(req, res, next);
+};
+
+export const errorLogger = (error: Error, req: Request, res: Response, next: NextFunction) => {
+  return loggerService.errorLogger(error, req, res, next);
 };
