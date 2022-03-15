@@ -1,6 +1,5 @@
 import fsPromises from 'fs/promises';
-import { ObjectEncodingOptions, PathLike } from 'fs';
-import * as fs from 'fs';
+import fs, { ObjectEncodingOptions, PathLike } from 'fs';
 
 class FsService {
   public async appendFile(
