@@ -25,10 +25,9 @@ export const config: Config = {
   static: {
     path: {
       pictures: path.resolve(__dirname, '..', '..', 'static', 'pictures'),
-      css: path.resolve(__dirname, '..', '..', 'static', 'frontend', 'css'),
-      js: path.resolve(__dirname, '..', '..', 'static', 'frontend', 'js'),
       frontend: path.resolve(__dirname, '..', '..', 'static', 'frontend'),
       logs: path.resolve(__dirname, '..', '..', 'logs'),
+      uploads: path.resolve(__dirname, '..', '..', 'uploads'),
     },
   },
   DEFAULT_PICTURE_LIMIT: 6,
