@@ -3,6 +3,7 @@ import { Gallery, Position } from './gallery_interface';
 import { config } from '../config/config';
 import { ExceptionService } from '../exception/exceptions_service';
 import { fsService } from '../fs/fs_service';
+import path from 'path';
 
 class GalleryService {
   private readonly limit: number;
@@ -27,13 +28,13 @@ class GalleryService {
     return { start, end };
   }
 
+  private async getAllPictures() {
+    return fsService.readdir(this.picturesPath);
+  }
+
   private async getTotalPages() {
     const allPictures = await this.getAllPictures();
     return Math.ceil(allPictures.length / this.limit);
-  }
-
-  private async getAllPictures() {
-    return fsService.readdir(this.picturesPath);
   }
 
   private async prepareRequiredPictures(startPosition: number, endPosition: number) {
@@ -61,9 +62,29 @@ class GalleryService {
     }
   }
 
+  private checkIncomingFile(req: Request) {
+    if (!req.file) {
+      throw ExceptionService.BadRequest('File missing');
+    }
+
+    if (req.file.mimetype !== 'image/jpeg') {
+      throw ExceptionService.BadRequest('Unfortunately we support only jpeg extension');
+    }
+  }
+
   public async createPicture(req: Request, res: Response, next: NextFunction) {
-    console.log(req.file);
-    res.end();
+    const picturePath = req.file?.path || '';
+    const filename = req.file?.filename || '';
+    const fileOriginalName = req.file?.originalname || '';
+    const newFilePath = path.join(this.picturesPath, filename + fileOriginalName);
+
+    try {
+      this.checkIncomingFile(req);
+      await fsService.moveFile(picturePath, newFilePath);
+      res.end();
+    } catch (e) {
+      next(e);
+    }
   }
 }
 

@@ -11,6 +11,7 @@ const app = express();
 const PORT = config.env.PORT;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(logRequestInfo);
 

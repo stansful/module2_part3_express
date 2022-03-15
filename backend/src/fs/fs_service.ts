@@ -6,7 +6,7 @@ class FsService {
     filePath: PathLike | fsPromises.FileHandle,
     data: string | Uint8Array,
     options?: ObjectEncodingOptions & fsPromises.FlagAndOpenMode,
-  ): Promise<void> {
+  ) {
     await fsPromises.appendFile(filePath, data, options);
   }
 
@@ -27,6 +27,10 @@ class FsService {
 
   public async readdir(path: PathLike, options?: fs.ObjectEncodingOptions) {
     return fsPromises.readdir(path, options);
+  }
+
+  public async moveFile(oldPath: PathLike, newPath: PathLike) {
+    await fsPromises.rename(oldPath, newPath);
   }
 }
 
