@@ -4,10 +4,18 @@ import { config } from '../config/config';
 import path from 'path';
 
 class LoggerService {
-  logsPath: string;
+  private readonly logsPath: string;
 
   constructor() {
     this.logsPath = config.static.path.logs;
+  }
+
+  private async createLogFolderIfNotExist() {
+    try {
+      await fsService.checkExistFolder(this.logsPath);
+    } catch (e) {
+      await fsService.makeDirectory(this.logsPath, { recursive: true });
+    }
   }
 
   private createLog(req: Request): string {
@@ -23,23 +31,15 @@ class LoggerService {
     return title + method + url + body + requestTime + newLine;
   }
 
-  public async requestLogger(req: Request, res: Response, next: NextFunction) {
+  public async logRequestInfo(req: Request, res: Response, next: NextFunction) {
     const data = this.createLog(req);
-
-    try {
-      await fsService.checkExistFolder(this.logsPath);
-    } catch (e) {
-      await fsService.makeDirectory(this.logsPath, { recursive: true });
-    }
-
+    await this.createLogFolderIfNotExist();
     await fsService.appendFile(path.join(this.logsPath, 'Test-log.txt'), data);
     next();
   }
 }
 
-const saveContext = (req: Request, res: Response, next: NextFunction) => {
+export const logRequestInfo = (req: Request, res: Response, next: NextFunction) => {
   const loggerService = new LoggerService();
-  return loggerService.requestLogger(req, res, next);
+  return loggerService.logRequestInfo(req, res, next);
 };
-
-export const loggerService = saveContext;
