@@ -9,7 +9,8 @@
 .
 ├── src
 │    │── auth
-│    │     └── auth_service.ts
+│    │     │── auth_service.ts
+│    │     └── auth_controller.ts
 │    │── configs
 │    │     │── config.ts
 │    │     └── config_interface.ts
@@ -31,7 +32,6 @@
 │    ├── token
 │    │     └── token_service.ts
 │    └── user
-│          │── user_controller.ts
 │          │── user_interface.ts
 │          └── user_service.ts
 │
