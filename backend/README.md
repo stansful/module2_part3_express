@@ -93,7 +93,7 @@ npm run lint
 
 ## Issues
 
-If you find any [issue](https://github.com/stansful/module2_part2_node/issues), please submit it.
+If you find any [issue](https://github.com/stansful/module2_part3_express/issues), please submit it.
 
 ## Stay in touch
 
