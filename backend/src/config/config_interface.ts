@@ -10,6 +10,7 @@ interface Env {
 
 interface HttpStatusCodes {
   OK: number;
+  CREATED: number;
   BAD_REQUEST: number;
   UNAUTHORIZED: number;
   NOT_FOUND: number;

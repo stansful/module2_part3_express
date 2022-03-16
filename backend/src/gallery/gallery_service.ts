@@ -93,7 +93,7 @@ class GalleryService {
     try {
       this.checkIncomingFile(req);
       await fsService.moveFile(picturePath, newFilePath);
-      res.end();
+      res.status(config.httpStatusCodes.CREATED).end();
     } catch (e) {
       next(e);
     }
