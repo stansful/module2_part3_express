@@ -3,7 +3,7 @@ import path from 'path';
 
 export const config: Config = {
   env: {
-    PORT: Number(process.env.PORT) || 5000,
+    PORT: Number(process.env.PORT) || 5555,
     PROTOCOL: process.env.PROTOCOL || 'http',
     DOMAIN: process.env.DOMAIN || 'localhost',
   },
