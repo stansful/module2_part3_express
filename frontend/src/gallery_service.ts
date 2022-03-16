@@ -48,6 +48,8 @@ const showGallery = async (page: string, token: string) => {
 
   const data = await httpGet<Gallery>(`${API_URL}/gallery?page=${page}`, token);
 
+  localStorage.setItem('total', `${data.total}`);
+
   gallery.innerHTML = '';
 
   data.objects.forEach((imgLink) => (gallery.innerHTML += `<img src='${imgLink}' width='200' height='200' alt='img'>`));
