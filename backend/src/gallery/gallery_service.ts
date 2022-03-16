@@ -8,10 +8,12 @@ import path from 'path';
 class GalleryService {
   private readonly limit: number;
   private readonly picturesPath: string;
+  private readonly uploadsPath: string;
 
   constructor() {
     this.limit = config.DEFAULT_PICTURE_LIMIT;
     this.picturesPath = config.static.path.pictures;
+    this.uploadsPath = config.static.path.uploads;
   }
 
   private checkPageBorders(page: number, total: number) {
@@ -72,11 +74,21 @@ class GalleryService {
     }
   }
 
+  private async createUploadFolderIfNotExist() {
+    try {
+      await fsService.checkExistFolder(this.uploadsPath);
+    } catch (e) {
+      await fsService.makeDirectory(this.uploadsPath, { recursive: true });
+    }
+  }
+
   public async createPicture(req: Request, res: Response, next: NextFunction) {
     const picturePath = req.file?.path || '';
     const filename = req.file?.filename || '';
     const fileOriginalName = req.file?.originalname || '';
     const newFilePath = path.join(this.picturesPath, filename + fileOriginalName);
+
+    await this.createUploadFolderIfNotExist();
 
     try {
       this.checkIncomingFile(req);
