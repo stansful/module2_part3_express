@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
+import morgan from 'morgan';
 import { config } from './config/config';
 import { authRouter } from './auth/auth_controller';
 import { galleryRouter } from './gallery/gallery_controller';
 import { errorService } from './error/error_service';
 import { ExceptionService } from './exception/exceptions_service';
-import morgan from 'morgan';
 import { createLogStream, loggerService } from './logger/logger_service';
 
 const app = express();
