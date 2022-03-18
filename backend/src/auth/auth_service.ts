@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { tokenService } from '../token/token_service';
 import { userService } from '../user/user_service';
-import { ExceptionService } from '../exception/exceptions_service';
 import { User } from '../user/user_interface';
+import { Unauthorized } from '../exception/httpExceptions/unauthorized';
 
 class AuthService {
   public validateToken(req: Request, res: Response, next: NextFunction) {
@@ -10,7 +10,7 @@ class AuthService {
 
     const isValid = tokenService.verifyToken(userToken);
     if (!isValid) {
-      throw ExceptionService.Unauthorized('Token is not valid');
+      throw new Unauthorized('Token is not valid');
     }
 
     next();
@@ -19,7 +19,7 @@ class AuthService {
   public verifyPassword(candidatePassword: string, userPassword: string) {
     const isValid = candidatePassword === userPassword;
     if (!isValid) {
-      throw ExceptionService.Unauthorized('Password verify failed');
+      throw new Unauthorized('Password verify failed');
     }
   }
 
@@ -32,7 +32,7 @@ class AuthService {
       const token = { token: tokenService.token };
       res.json(token);
     } catch (error) {
-      throw ExceptionService.Unauthorized('Email or password are invalid.');
+      throw new Unauthorized('Email or password are invalid.');
     }
   };
 }

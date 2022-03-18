@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { Gallery, Position } from './gallery_interface';
 import { config } from '../config/config';
-import { ExceptionService } from '../exception/exceptions_service';
 import { fsService } from '../fs/fs_service';
 import path from 'path';
+import { BadRequest } from '../exception/httpExceptions/bad_request';
 
 class GalleryService {
   private readonly limit: number;
@@ -21,7 +21,7 @@ class GalleryService {
   private checkPageBorders(page: number, total: number) {
     const isValid = page > 0 && page <= total;
     if (!isValid) {
-      throw ExceptionService.BadRequest(`Page should be greater than 0 and less than ${total}`);
+      throw new BadRequest(`Page should be greater than 0 and less than ${total}`);
     }
   }
 
@@ -68,11 +68,11 @@ class GalleryService {
 
   private checkIncomingFile(req: Request) {
     if (!req.file) {
-      throw ExceptionService.BadRequest('File missing');
+      throw new BadRequest('File missing');
     }
 
     if (req.file.mimetype !== 'image/jpeg') {
-      throw ExceptionService.BadRequest('Unfortunately we support only jpeg extension');
+      throw new BadRequest('Unfortunately we support only jpeg extension');
     }
   }
 
