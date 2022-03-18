@@ -14,16 +14,12 @@ class LoggerService {
     return new Date().toUTCString() + extension;
   }
 
-  public createLogStream(fileName: string | rotatingFileStream.Generator): rotatingFileStream.RotatingFileStream {
+  public createLogStream = (fileName: string | rotatingFileStream.Generator): rotatingFileStream.RotatingFileStream => {
     return rotatingFileStream.createStream(fileName, {
       interval: this.logInterval,
       path: this.logsPath,
     });
-  }
+  };
 }
 
 export const loggerService = new LoggerService();
-
-export const createLogStream = (fileName: string | rotatingFileStream.Generator) => {
-  return loggerService.createLogStream(fileName);
-};

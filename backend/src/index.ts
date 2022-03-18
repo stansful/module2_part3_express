@@ -6,7 +6,7 @@ import { authRouter } from './auth/auth_controller';
 import { galleryRouter } from './gallery/gallery_controller';
 import { errorService } from './error/error_service';
 import { ExceptionService } from './exception/exceptions_service';
-import { createLogStream, loggerService } from './logger/logger_service';
+import { loggerService } from './logger/logger_service';
 
 const app = express();
 const PORT = config.env.PORT;
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   morgan('combined', {
-    stream: createLogStream(loggerService.generateLogFileName()),
+    stream: loggerService.createLogStream(loggerService.generateLogFileName()),
   }),
 );
 
