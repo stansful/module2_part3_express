@@ -9,11 +9,13 @@ class GalleryService {
   private readonly limit: number;
   private readonly picturesPath: string;
   private readonly uploadsPath: string;
+  private isGalleryFolderCreated: boolean;
 
   constructor() {
     this.limit = config.DEFAULT_PICTURE_LIMIT;
     this.picturesPath = config.static.path.pictures;
     this.uploadsPath = config.static.path.uploads;
+    this.isGalleryFolderCreated = false;
   }
 
   private checkPageBorders(page: number, total: number) {
@@ -80,6 +82,7 @@ class GalleryService {
     } catch (e) {
       await fsService.makeDirectory(this.uploadsPath, { recursive: true });
     }
+    this.isGalleryFolderCreated = true;
   }
 
   public async createPicture(req: Request, res: Response, next: NextFunction) {
@@ -88,7 +91,9 @@ class GalleryService {
     const fileOriginalName = req.file?.originalname || '';
     const newFilePath = path.join(this.picturesPath, filename + fileOriginalName);
 
-    await this.createUploadFolderIfNotExist();
+    if (!this.isGalleryFolderCreated) {
+      await this.createUploadFolderIfNotExist();
+    }
 
     try {
       this.checkIncomingFile(req);
