@@ -4,7 +4,7 @@ class TokenService {
   private readonly secretToken: string;
 
   constructor() {
-    this.secretToken = config.SECRET_AUTHORIZATION_TOKEN;
+    this.secretToken = config.env.SECRET_AUTHORIZATION_TOKEN;
   }
 
   public verifyToken(token: string) {

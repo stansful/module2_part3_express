@@ -6,6 +6,8 @@ export const config: Config = {
     PORT: Number(process.env.PORT) || 5555,
     PROTOCOL: process.env.PROTOCOL || 'http',
     DOMAIN: process.env.DOMAIN || 'localhost',
+    DEFAULT_PICTURE_LIMIT: Number(process.env.PICTURE_LIMIT) || 6,
+    SECRET_AUTHORIZATION_TOKEN: process.env.TOKEN || 'token',
   },
   httpStatusCodes: {
     OK: 200,
@@ -15,22 +17,11 @@ export const config: Config = {
     NOT_FOUND: 404,
     INTERNAL_SERVER_ERROR: 500,
   },
-  mimeTypes: {
-    HTML: 'text/html',
-    CSS: 'text/css',
-    JS: 'text/javascript',
-    JSON: 'application/json',
-    BIN: 'application/octet-stream',
-    JPEG: 'image/jpeg',
-  },
   static: {
     path: {
       pictures: path.resolve(__dirname, '..', '..', 'static', 'pictures'),
-      frontend: path.resolve(__dirname, '..', '..', 'static', 'frontend'),
       logs: path.resolve(__dirname, '..', '..', 'logs'),
       uploads: path.resolve(__dirname, '..', '..', 'uploads'),
     },
   },
-  DEFAULT_PICTURE_LIMIT: 6,
-  SECRET_AUTHORIZATION_TOKEN: 'token',
 };

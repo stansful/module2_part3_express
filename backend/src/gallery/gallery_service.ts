@@ -12,7 +12,7 @@ class GalleryService {
   private isGalleryFolderCreated: boolean;
 
   constructor() {
-    this.limit = config.DEFAULT_PICTURE_LIMIT;
+    this.limit = config.env.DEFAULT_PICTURE_LIMIT;
     this.picturesPath = config.static.path.pictures;
     this.uploadsPath = config.static.path.uploads;
     this.isGalleryFolderCreated = false;

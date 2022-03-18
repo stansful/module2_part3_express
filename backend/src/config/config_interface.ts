@@ -1,11 +1,15 @@
 interface Path {
-  [key: string]: string;
+  pictures: string;
+  logs: string;
+  uploads: string;
 }
 
 interface Env {
   PORT: number;
   PROTOCOL: string;
   DOMAIN: string;
+  DEFAULT_PICTURE_LIMIT: number;
+  SECRET_AUTHORIZATION_TOKEN: string;
 }
 
 interface HttpStatusCodes {
@@ -17,22 +21,10 @@ interface HttpStatusCodes {
   INTERNAL_SERVER_ERROR: number;
 }
 
-interface MimeTypes {
-  HTML: string;
-  CSS: string;
-  JS: string;
-  JSON: string;
-  BIN: string;
-  JPEG: string;
-}
-
 export interface Config {
   env: Env;
   httpStatusCodes: HttpStatusCodes;
-  mimeTypes: MimeTypes;
   static: {
     path: Path;
   };
-  DEFAULT_PICTURE_LIMIT: number;
-  SECRET_AUTHORIZATION_TOKEN: string;
 }
