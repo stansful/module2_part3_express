@@ -52,7 +52,7 @@ class GalleryService {
     return { objects: picturesPath, page: requestPage, total: totalPages };
   }
 
-  public async getRequiredPictures(req: Request, res: Response, next: NextFunction) {
+  public getRequiredPictures = async (req: Request, res: Response, next: NextFunction) => {
     const requestPage = Number(req.query.page) || 1;
     const position = this.calculateCopyPositions(requestPage);
     const totalPages = await this.getTotalPages();
@@ -64,7 +64,7 @@ class GalleryService {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
   private checkIncomingFile(req: Request) {
     if (!req.file) {
@@ -85,7 +85,7 @@ class GalleryService {
     this.isGalleryFolderCreated = true;
   }
 
-  public async createPicture(req: Request, res: Response, next: NextFunction) {
+  public createPicture = async (req: Request, res: Response, next: NextFunction) => {
     const picturePath = req.file?.path || '';
     const filename = req.file?.filename || '';
     const fileOriginalName = req.file?.originalname || '';
@@ -102,14 +102,7 @@ class GalleryService {
     } catch (e) {
       next(e);
     }
-  }
+  };
 }
 
-const galleryService = new GalleryService();
-
-export const getRequiredPictures = (req: Request, res: Response, next: NextFunction) => {
-  return galleryService.getRequiredPictures(req, res, next);
-};
-export const createPicture = (req: Request, res: Response, next: NextFunction) => {
-  return galleryService.createPicture(req, res, next);
-};
+export const galleryService = new GalleryService();
