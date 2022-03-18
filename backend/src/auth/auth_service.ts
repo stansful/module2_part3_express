@@ -16,18 +16,25 @@ class AuthService {
     next();
   }
 
-  public signIn(req: Request, res: Response) {
+  public verifyPassword(candidatePassword: string, userPassword: string) {
+    const isValid = candidatePassword === userPassword;
+    if (!isValid) {
+      throw ExceptionService.Unauthorized('Password verify failed');
+    }
+  }
+
+  public signIn = (req: Request, res: Response) => {
     const candidate: User = { email: req.body.email, password: req.body.password };
     try {
       const user = userService.getOne(candidate);
-      userService.verifyPasswords(candidate.password, user.password);
+      this.verifyPassword(candidate.password, user.password);
 
       const token = { token: tokenService.token };
       res.json(token);
     } catch (error) {
       throw ExceptionService.Unauthorized('Email or password are invalid.');
     }
-  }
+  };
 }
 
 export const authService = new AuthService();
