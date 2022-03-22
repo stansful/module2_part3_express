@@ -6,7 +6,7 @@ import { authRouter } from './auth/auth_controller';
 import { galleryRouter } from './gallery/gallery_controller';
 import { errorService } from './error/error_service';
 import { loggerService } from './logger/logger_service';
-import { BadRequest } from './exception/httpExceptions/bad_request';
+import { BadRequest } from './exception/http/bad_request';
 
 const app = express();
 const PORT = config.env.PORT;

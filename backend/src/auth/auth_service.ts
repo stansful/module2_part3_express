@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { tokenService } from '../token/token_service';
 import { userService } from '../user/user_service';
 import { User } from '../user/user_interface';
-import { Unauthorized } from '../exception/httpExceptions/unauthorized';
+import { Unauthorized } from '../exception/http/unauthorized';
 
 class AuthService {
   public validateToken(req: Request, res: Response, next: NextFunction) {

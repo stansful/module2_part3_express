@@ -1,4 +1,4 @@
-export class ExceptionService<Type> extends Error {
+export class Exception<Type> extends Error {
   public readonly status: number;
   public readonly message: string;
   public readonly data?: Type;

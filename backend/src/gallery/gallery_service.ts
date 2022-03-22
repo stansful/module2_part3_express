@@ -3,7 +3,7 @@ import { Gallery, Position } from './gallery_interface';
 import { config } from '../config/config';
 import { fsService } from '../fs/fs_service';
 import path from 'path';
-import { BadRequest } from '../exception/httpExceptions/bad_request';
+import { BadRequest } from '../exception/http/bad_request';
 
 class GalleryService {
   private readonly limit: number;
