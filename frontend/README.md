@@ -21,7 +21,6 @@
 ├── gallery.html          -| gallery page
 ├── .eslintignore         -| ignore files for eslint
 ├── .eslintrc.json        -| lint configs
-├── .gitignore            -| ignore files for git
 ├── .prettierignore       -| ignore files for prettier
 ├── .prettierrc           -| prettier configs
 ├── package.json          -| project configs dependencies and etc
