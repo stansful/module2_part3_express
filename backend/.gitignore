@@ -1,7 +1,0 @@
-.idea
-dist
-node_modules
-.env
-static/frontend
-logs
-uploads
