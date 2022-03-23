@@ -43,9 +43,8 @@ class LoggerService {
     return new Date().toUTCString() + extension;
   }
 
-  public logger = async (reqOrMsg: Request | string, res: Response, next: NextFunction) => {
+  public logger = async (reqOrMsg: Request | string, res?: Response, next?: NextFunction) => {
     await this.createLogFolderIfNotExist();
-
     if (typeof reqOrMsg === 'string') {
       const message = `Server response: ${reqOrMsg}\n`;
       await fsService.appendFile(`${this.logsPath}/${this.logFileName}`, message);
@@ -58,7 +57,9 @@ class LoggerService {
       Body: ${JSON.stringify(reqOrMsg.body)}\n`;
       await fsService.appendFile(`${this.logsPath}/${this.logFileName}`, message);
     }
-    next();
+    if (next) {
+      next();
+    }
   };
 }
 
