@@ -2,6 +2,8 @@ import fsPromises from 'fs/promises';
 import fs, { ObjectEncodingOptions, PathLike } from 'fs';
 import * as util from 'util';
 
+const fsExistPromise = util.promisify(fs.exists);
+
 class FsService {
   public async appendFile(
     filePath: PathLike | fsPromises.FileHandle,
@@ -12,8 +14,7 @@ class FsService {
   }
 
   public async checkExistFolder(path: PathLike): Promise<boolean> {
-    const isExist = util.promisify(fs.exists);
-    return isExist(path);
+    return fsExistPromise(path);
   }
 
   public async makeDirectory(path: PathLike, options?: fs.MakeDirectoryOptions) {
