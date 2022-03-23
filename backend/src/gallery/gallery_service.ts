@@ -77,12 +77,14 @@ class GalleryService {
   }
 
   private async createUploadFolderIfNotExist() {
-    try {
-      await fsService.checkExistFolder(this.uploadsPath);
-    } catch (e) {
-      await fsService.makeDirectory(this.uploadsPath, { recursive: true });
+    if (!this.isGalleryFolderCreated) {
+      try {
+        await fsService.checkExistFolder(this.uploadsPath);
+      } catch (e) {
+        await fsService.makeDirectory(this.uploadsPath, { recursive: true });
+      }
+      this.isGalleryFolderCreated = true;
     }
-    this.isGalleryFolderCreated = true;
   }
 
   public createPicture = async (req: Request, res: Response, next: NextFunction) => {
@@ -91,9 +93,7 @@ class GalleryService {
     const fileOriginalName = req.file?.originalname || '';
     const newFilePath = path.join(this.picturesPath, filename + fileOriginalName);
 
-    if (!this.isGalleryFolderCreated) {
-      await this.createUploadFolderIfNotExist();
-    }
+    await this.createUploadFolderIfNotExist();
 
     try {
       this.checkIncomingFile(req);
