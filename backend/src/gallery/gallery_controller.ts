@@ -8,10 +8,9 @@ const galleryRouter = Router();
 
 const upload = multer({ dest: config.static.path.uploads });
 
-galleryRouter.use(authService.validateToken);
-
 galleryRouter
   .route('/gallery')
+  .all(authService.validateToken)
   .get(galleryService.getRequiredPictures)
   .post(upload.single('picture'), galleryService.createPicture);
 
