@@ -4,6 +4,7 @@ import { config } from '../config/config';
 import { fsService } from '../fs/fs_service';
 import path from 'path';
 import { BadRequest } from '../exception/http/bad_request';
+import { loggerService } from '../logger/logger_service';
 
 class GalleryService {
   private readonly limit: number;
@@ -64,6 +65,7 @@ class GalleryService {
       const sendingObject = this.createSendingObject(requiredPictures, requestPage, totalPages);
       res.json(sendingObject);
     } catch (error) {
+      await loggerService.logger(`Failed to send gallery objects. ${error}`);
       next(error);
     }
   };
@@ -101,8 +103,9 @@ class GalleryService {
       this.checkIncomingFile(req);
       await fsService.moveFile(picturePath, newFilePath);
       res.status(config.httpStatusCodes.CREATED).end();
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      await loggerService.logger(`Failed to upload picture to the server. ${error}`);
+      next(error);
     }
   };
 }
