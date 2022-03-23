@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import { App } from './app';
-import { authRouter } from './auth/auth_controller';
-import { galleryRouter } from './gallery/gallery_controller';
+import { AuthController } from './auth/auth_controller';
+import { GalleryController } from './gallery/gallery_controller';
 
-const app = new App([authRouter, galleryRouter]);
+const app = new App([new AuthController(), new GalleryController()]);
 
 app.listen();

@@ -7,7 +7,7 @@ import { authService } from '../auth/auth_service';
 
 const upload = multer({ dest: config.static.path.uploads });
 
-class GalleryController implements Controller {
+export class GalleryController implements Controller {
   public path: string;
   public router: express.Router;
 
@@ -15,10 +15,10 @@ class GalleryController implements Controller {
     this.path = '/gallery';
     this.router = express.Router();
 
-    this.addRoutes();
+    this.initializeRoutes();
   }
 
-  private addRoutes() {
+  public initializeRoutes() {
     this.router
       .route('/gallery')
       .all(authService.validateToken)
@@ -26,5 +26,3 @@ class GalleryController implements Controller {
       .post(upload.single('picture'), galleryService.createPicture);
   }
 }
-
-export const galleryRouter = new GalleryController().router;

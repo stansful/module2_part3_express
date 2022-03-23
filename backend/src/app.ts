@@ -1,40 +1,34 @@
-import express, { Express, Router } from 'express';
-import morgan from 'morgan';
+import express from 'express';
 import { NotFound } from './exception/http/not_found';
 import { config } from './config/config';
 import { errorService } from './error/error_service';
-import { loggerService } from './logger/logger_service';
+import { Controller } from './helpers/controller_interface';
 
 export class App {
-  public app: Express;
+  public app: express.Express;
   private readonly port: number;
 
-  constructor(routers: Router[]) {
+  constructor(controllers: Controller[]) {
     this.app = express();
     this.port = config.env.PORT;
 
     this.middlewares();
     this.static();
-    this.controllers(routers);
+    this.controllers(controllers);
     this.errorHandler();
   }
 
   private middlewares() {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(
-      morgan('combined', {
-        stream: loggerService.createLogStream(loggerService.generateLogFileName()),
-      }),
-    );
   }
 
   private static() {
-    this.app.use('/', express.static('static/pictures'), express.static('static/frontend'));
+    this.app.use(express.static('static/pictures'), express.static('static/frontend'));
   }
 
-  private controllers(routers: Router[]) {
-    routers.forEach((router) => this.app.use('/', router));
+  private controllers(controllers: Controller[]) {
+    controllers.forEach((controller) => this.app.use('/', controller.router));
 
     this.app.all('*', () => {
       throw new NotFound('Path doest not exist');
