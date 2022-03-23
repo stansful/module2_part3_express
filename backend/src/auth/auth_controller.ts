@@ -1,8 +1,21 @@
-import { Router } from 'express';
+import express from 'express';
+import { Controller } from '../helpers/controller_interface';
 import { authService } from './auth_service';
 
-const authRouter = Router();
+class AuthController implements Controller {
+  public path: string;
+  public router: express.Router;
 
-authRouter.post('/login', authService.signIn);
+  constructor() {
+    this.path = '/login';
+    this.router = express.Router();
 
-export { authRouter };
+    this.addRoutes();
+  }
+
+  private addRoutes() {
+    this.router.post(this.path, authService.signIn);
+  }
+}
+
+export const authRouter = new AuthController().router;
