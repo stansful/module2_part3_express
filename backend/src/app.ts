@@ -6,8 +6,8 @@ import { errorService } from './error/error_service';
 import { loggerService } from './logger/logger_service';
 
 export class App {
-  app: Express;
-  port: number;
+  public app: Express;
+  private readonly port: number;
 
   constructor(routers: Router[]) {
     this.app = express();
