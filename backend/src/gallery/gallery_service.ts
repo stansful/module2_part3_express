@@ -54,11 +54,13 @@ class GalleryService {
 
   public getRequiredPictures = async (req: Request, res: Response, next: NextFunction) => {
     const requestPage = Number(req.query.page) || 1;
-    const position = this.calculateCopyPositions(requestPage);
     const totalPages = await this.getTotalPages();
     try {
       this.checkPageBorders(requestPage, totalPages);
+
+      const position = this.calculateCopyPositions(requestPage);
       const requiredPictures = await this.prepareRequiredPictures(position.start, position.end);
+
       const sendingObject = this.createSendingObject(requiredPictures, requestPage, totalPages);
       res.json(sendingObject);
     } catch (error) {
