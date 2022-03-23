@@ -14,6 +14,7 @@ class AuthService {
       await tokenService.verifyToken(userToken);
       next();
     } catch (error) {
+      await loggerService.logger(`Sign in failed, Token is compromised. ${error}`);
       const unAuthorizedMessage = { errorMessage: 'Token is compromised' };
       res.status(config.httpStatusCodes.UNAUTHORIZED).json(unAuthorizedMessage);
     }
