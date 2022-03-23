@@ -10,6 +10,7 @@ interface Env {
   DOMAIN: string;
   DEFAULT_PICTURE_LIMIT: number;
   SECRET_AUTHORIZATION_TOKEN: string;
+  LOG_INTERVAL_IN_MINUTES: number;
 }
 
 interface HttpStatusCodes {

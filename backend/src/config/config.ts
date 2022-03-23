@@ -8,6 +8,7 @@ export const config: Config = {
     DOMAIN: process.env.DOMAIN || 'localhost',
     DEFAULT_PICTURE_LIMIT: Number(process.env.PICTURE_LIMIT) || 6,
     SECRET_AUTHORIZATION_TOKEN: process.env.TOKEN || 'token',
+    LOG_INTERVAL_IN_MINUTES: Number(process.env.LOG_INTERVAL_IN_MINUTES) || 60,
   },
   httpStatusCodes: {
     OK: 200,

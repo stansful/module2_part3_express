@@ -13,8 +13,11 @@ class FsService {
     await fsPromises.appendFile(filePath, data, options);
   }
 
-  public async checkExistFolder(path: PathLike): Promise<boolean> {
-    return fsExistPromise(path);
+  public async checkExistFolder(path: PathLike) {
+    const isExist = await fsExistPromise(path);
+    if (!isExist) {
+      throw new Error('Folder does not exist');
+    }
   }
 
   public async makeDirectory(path: PathLike, options?: fs.MakeDirectoryOptions) {
