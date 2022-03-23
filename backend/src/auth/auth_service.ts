@@ -7,15 +7,16 @@ import { loggerService } from '../logger/logger_service';
 import { config } from '../config/config';
 
 class AuthService {
-  public validateToken(req: Request, res: Response, next: NextFunction) {
+  public async validateToken(req: Request, res: Response, next: NextFunction) {
     const userToken = req.headers.authorization || '';
 
-    const isValid = tokenService.verifyToken(userToken);
-    if (!isValid) {
-      throw new Unauthorized('Token is not valid');
+    try {
+      await tokenService.verifyToken(userToken);
+      next();
+    } catch (error) {
+      const unAuthorizedMessage = { errorMessage: 'Token is compromised' };
+      res.status(config.httpStatusCodes.UNAUTHORIZED).json(unAuthorizedMessage);
     }
-
-    next();
   }
 
   public verifyPassword(candidatePassword: string, userPassword: string) {
@@ -31,8 +32,8 @@ class AuthService {
       const user = userService.getOne(candidate);
       this.verifyPassword(candidate.password, user.password);
 
-      const token = { token: tokenService.token };
-      res.json(token);
+      const token = await tokenService.sign(user.email);
+      res.json({ token });
     } catch (error) {
       await loggerService.logger(`Sign in failed. ${error}`);
 

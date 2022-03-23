@@ -9,7 +9,7 @@ interface Env {
   PROTOCOL: string;
   DOMAIN: string;
   DEFAULT_PICTURE_LIMIT: number;
-  SECRET_AUTHORIZATION_TOKEN: string;
+  JWT_ACCESS_TOKEN: string;
   LOG_INTERVAL_IN_MINUTES: number;
 }
 
