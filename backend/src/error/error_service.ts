@@ -7,7 +7,7 @@ class ErrorService {
     if (error instanceof Exception) {
       return res.status(error.status).json({ errorMessage: error.message });
     }
-    res.status(config.httpStatusCodes.INTERNAL_SERVER_ERROR).send('OOPS something goes wrong...');
+    res.status(config.httpStatusCodes.INTERNAL_SERVER_ERROR).json({ errorMessage: 'Oops...' });
   }
 }
 
