@@ -24,7 +24,9 @@ const validate = (user: User) => {
 };
 
 const signIn = async (user: User) => {
-  return httpPost<Token | ErrorMessage>(`${API_URL}/login`, user);
+  return httpPost<Token | ErrorMessage>(`${API_URL}/login`, JSON.stringify(user), {
+    'Content-Type': 'application/json',
+  });
 };
 
 const submitEvent = async (event: Event) => {

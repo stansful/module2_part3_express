@@ -1,10 +1,8 @@
-const httpPost = async <ResponseData>(url = '', data = {}): Promise<ResponseData> => {
+const httpPost = async <ResponseData>(url = '', data: string | FormData, headers: any): Promise<ResponseData> => {
   const response = await fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+    headers,
+    body: data,
   });
 
   return response.json();
