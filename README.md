@@ -1,16 +1,16 @@
 ## Description
 
-1. Detailed description is available in appropriated folders
+1. Detailed description is available in appropriated directories
 
 ## Getting started
 
 ```
 npm run start
     # or
-yarn start
+npm run dev
 ```
 
-* After installing dependencies and etc.
+* Wait for a moment...
 * Open the link in terminal
 
 ## Other commands:
@@ -19,7 +19,7 @@ yarn start
 
 ## Issues
 
-If you find any [issue](https://github.com/stansful/module2_part2_node/issues), please submit it.
+If you find any [issue](https://github.com/stansful/module2_part3_express/issues), please submit it.
 
 ## Stay in touch
 

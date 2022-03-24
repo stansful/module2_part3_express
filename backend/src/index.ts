@@ -1,15 +1,8 @@
 import 'dotenv/config';
-import { Application } from './framework/application';
-import { config } from './configs/config';
-import { userRouter } from './user/user_controller';
-import { galleryRouter } from './gallery/gallery_controller';
+import { App } from './app';
+import { AuthController } from './auth/auth_controller';
+import { GalleryController } from './gallery/gallery_controller';
 
-const app = new Application();
-const PORT = config.env.PORT;
+const app = new App([new AuthController(), new GalleryController()]);
 
-app.registerRouter(userRouter);
-app.registerRouter(galleryRouter);
-
-app.listen(PORT, () => {
-  console.log(`Server started http://localhost:${PORT}`);
-});
+app.listen();
