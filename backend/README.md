@@ -8,29 +8,30 @@
 ```
 .
 ├── src
+│    │── auth
+│    │     │── auth_service.ts
+│    │     └── auth_controller.ts
 │    │── configs
 │    │     │── config.ts
 │    │     └── config_interface.ts
 │    ├── database
 │    │     │── local_database.ts
 │    │     └── database_interface.ts
-│    ├── framework
-│    │     │── application.ts                      -| main file of custom framework 
-│    │     │── framework_interfaces.ts
-│    │     │── router.ts
-│    │     │── static_controller.ts
-│    │     └── static_service.ts
+│    │── error
+│    │     └── error_service.ts
+│    │── exception
+│    │     └── exception_service.ts
+│    │── fs
+│    │     └── fs_service.ts
 │    ├── gallery
 │    │     │── gallery_controller.ts
 │    │     │── gallery_interface.ts
 │    │     └── gallery_service.ts
-│    ├── response
-│    │     │── response_interface.ts
-│    │     └── response_service.ts
+│    ├── logger
+│    │     └── logger_service.ts
 │    ├── token
 │    │     └── token_service.ts
 │    └── user
-│          │── user_controller.ts
 │          │── user_interface.ts
 │          └── user_service.ts
 │
@@ -39,11 +40,13 @@
 │    │     │── 1.jpeg
 │    │     │── 2.jpeg
 │    │     └── N.jpeg
-│    └── frontend           
+│    └── frontend
+│
+├── logs
+├── uploads
 │
 ├── .eslintignore         -| ignore files for eslint
 ├── .eslintrc.json        -| lint configs
-├── .gitignore            -| ignore files for git
 ├── .prettierignore       -| ignore files for prettier
 ├── .prettierrc           -| prettier configs
 ├── package.json          -| project configs dependencies and etc
@@ -57,24 +60,18 @@
 
 ```
 npm install 
-    # or
-yarn install
 ```
 
 2. Copy static
 
 ```
 npm run copy:static
-    # or
-yarn copy:static
 ```
 
 3. Start dev mode
 
 ```
 npm run dev
-    # or
-yarn dev
 ```
 
 ## Other commands:
@@ -83,23 +80,19 @@ yarn dev
 
 ```
 npm run format
-    # or
-yarn format
 ```
 
 * lint and fix with eslint
 
 ```
 npm run lint
-    # or
-yarn lint
 ```
 
 * full list of commands available in package.json
 
 ## Issues
 
-If you find any [issue](https://github.com/stansful/module2_part2_node/issues), please submit it.
+If you find any [issue](https://github.com/stansful/module2_part3_express/issues), please submit it.
 
 ## Stay in touch
 

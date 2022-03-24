@@ -1,18 +1,19 @@
-import { config } from '../configs/config';
+import { config } from '../config/config';
+import jwt from 'jsonwebtoken';
 
 class TokenService {
   private readonly secretToken: string;
 
   constructor() {
-    this.secretToken = config.SECRET_AUTHORIZATION_TOKEN;
+    this.secretToken = config.env.JWT_ACCESS_TOKEN;
   }
 
-  public validateToken(token: string) {
-    return this.secretToken === token;
+  public async sign(data: string | object | Buffer, options?: jwt.SignOptions) {
+    return jwt.sign(data, this.secretToken, options);
   }
 
-  public get token() {
-    return this.secretToken;
+  public async verifyToken(token: string) {
+    return jwt.verify(token, this.secretToken);
   }
 }
 

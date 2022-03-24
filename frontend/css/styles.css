@@ -71,3 +71,7 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
+#sending-form {
+    margin-bottom: 10px;
+}

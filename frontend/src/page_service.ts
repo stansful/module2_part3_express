@@ -15,17 +15,19 @@ const getCurrentPage = (): string => {
 };
 
 const validatePage = () => {
-  const queryRegex = /\?page=[1-5]/;
+  const totalPages = Number(localStorage.getItem('total')) || 1;
 
   if (location.search === '') {
     location.search = 'page=1';
-  } else {
-    if (location.search.match(queryRegex)) {
-      const pageNumber = location.search.split('?page=').pop();
-      setNewPage(Number(pageNumber));
-    } else {
-      alert(PAGE_DOES_NOT_EXIST);
-      setNewPage();
-    }
+    return;
   }
+
+  const currentPageNumber = Number(location.search.split('?page=').pop()) || 1;
+
+  if (currentPageNumber <= totalPages && currentPageNumber > 0) {
+    return setNewPage(Number(currentPageNumber));
+  }
+
+  alert(PAGE_DOES_NOT_EXIST);
+  setNewPage();
 };
